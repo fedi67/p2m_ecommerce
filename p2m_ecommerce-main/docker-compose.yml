@@ -1,0 +1,40 @@
+services:
+  # 1. La base de données avec l'extension pgvector intégrée
+  db:
+    image: pgvector/pgvector:pg16-trixie
+    container_name: ecommerce_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-RFdn1234?!}
+      POSTGRES_DB: smart_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  # 2. Le Backend Python
+  backend:
+    build: ./ecommerce/server
+    container_name: ecommerce_backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./ecommerce/server/.env
+    environment:
+      # On écrase DB_HOST pour dire au backend de se connecter au conteneur 'db' et non à 'localhost'
+      - DB_HOST=db 
+    depends_on:
+      - db
+
+  # 3. Le Frontend
+  frontend:
+    build: ./ecommerce/frontend
+    container_name: ecommerce_frontend
+    ports:
+      - "5174:5173"
+    depends_on:
+      - backend
+
+# Volume persistant pour ne pas perdre les données de la base de données quand on coupe Docker
+volumes:
+  pgdata:
