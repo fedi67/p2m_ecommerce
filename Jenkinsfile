@@ -13,7 +13,6 @@ pipeline {
             steps {
                 // Just to prove Jenkins can talk to your computer's Docker!
                 sh 'docker version'
-                cd 'ecommerce'
                 sh 'docker-compose version'
             }
         }
