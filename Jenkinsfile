@@ -12,8 +12,8 @@ pipeline {
         stage('Verify Docker') {
             steps {
                 // Just to prove Jenkins can talk to your computer's Docker!
-                cd 'ecommerce' // Change to the directory where your Dockerfile and docker-compose.yml are located
                 sh 'docker version'
+                cd 'ecommerce'
                 sh 'docker-compose version'
             }
         }
