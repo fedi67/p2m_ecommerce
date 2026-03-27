@@ -90,7 +90,7 @@ function Login({ onClose, onSwitchSignup }) {
           </div>
 
           <button type="submit" className="login-btn-luxury">
-            S'IDENTIFIER
+            S IDENTIFIER
           </button>
         </form>
 

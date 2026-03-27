@@ -108,7 +108,7 @@ function Signup({ onClose, onSwitchLogin }) {
           </div>
 
           <button type="submit" className="login-btn-luxury full-width">
-            CONFIRMER L'ADHÉSION
+            CONFIRMER L ADHESION
           </button>
         </form>
 

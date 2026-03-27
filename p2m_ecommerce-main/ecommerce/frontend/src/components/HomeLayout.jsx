@@ -59,7 +59,7 @@ export const Navbar = ({ userName, onLogout, onContact, onCartToggle, onLoginCli
           ) : (
             <div style={{ display: 'flex', gap: '10px' }}>
               <button className="nav-btn-pro" onClick={onLoginClick}>Login</button>
-              <button className="nav-btn-pro active" onClick={onSignupClick}>S'inscrire</button>
+              <button className="nav-btn-pro active" onClick={onSignupClick}>S inscrire</button>
             </div>
           )}
 
