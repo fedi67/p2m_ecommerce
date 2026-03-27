@@ -15,22 +15,29 @@ pipeline {
             }
         }
 
-        stage('2. Spin Up Environment (Docker)') {
+stage('2. Spin Up Environment (Docker)') {
             steps {
                 echo 'Starting Database, Backend, and Frontend containers...'
                 
-                // 1. Let's print out everything Jenkins sees in the current folder
-                // This is a classic DevOps debugging trick!
-                sh 'pwd'
-                sh 'ls -la'
-                
-                // 2. Navigate into the folder where your docker-compose.yml ACTUALLY lives
-                // (Change this if your Git repo has a different root folder name)
                 dir('p2m_ecommerce-main') {
-                    sh 'ls -la' // Print the contents of this folder too, just to be sure
+                    
+                    // 1. Generate the .env file on the fly for Docker
+                    sh '''
+                    cat <<EOT > ecommerce/server/.env
+GEMINI_API_KEY=AIzaSyAi-O9wppFZoZkpRagxxV0rs6eu7FfAhZY
+DB_HOST=db
+DB_USER=postgres
+DB_PASSWORD=RFdn1234?!
+DB_NAME=smart_db
+DB_PORT=5432
+EOT
+                    '''
+                    
+                    // 2. Spin up the containers now that the .env is in place
                     sh 'docker-compose up -d --build'
                 }
                 
+                // 3. Give the containers 10 seconds to fully boot up before moving on
                 sh 'sleep 10'
             }
         }
