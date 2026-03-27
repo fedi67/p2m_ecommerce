@@ -20,9 +20,7 @@ pipeline {
                 echo 'Starting Database, Backend, and Frontend containers...'
                 // Spins up your exact docker-compose setup in the background
 
-                dir('p2m_ecommerce-main') {
-                    sh 'docker-compose up -d --build'
-                }
+                sh 'docker compose up -d --build'
 
                 // Gives the containers a few seconds to fully boot up before testing
                 sh 'sleep 10'
