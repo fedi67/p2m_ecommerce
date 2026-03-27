@@ -85,3 +85,4 @@ EOT
             echo '❌ Tests failed. Please check the Playwright report.'
         }
     }
+}
