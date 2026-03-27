@@ -18,11 +18,19 @@ pipeline {
         stage('2. Spin Up Environment (Docker)') {
             steps {
                 echo 'Starting Database, Backend, and Frontend containers...'
-                // Spins up your exact docker-compose setup in the background
-
-                sh 'docker-compose up -d --build'
-
-                // Gives the containers a few seconds to fully boot up before testing
+                
+                // 1. Let's print out everything Jenkins sees in the current folder
+                // This is a classic DevOps debugging trick!
+                sh 'pwd'
+                sh 'ls -la'
+                
+                // 2. Navigate into the folder where your docker-compose.yml ACTUALLY lives
+                // (Change this if your Git repo has a different root folder name)
+                dir('p2m_ecommerce-main') {
+                    sh 'ls -la' // Print the contents of this folder too, just to be sure
+                    sh 'docker-compose up -d --build'
+                }
+                
                 sh 'sleep 10'
             }
         }
