@@ -15,7 +15,7 @@ pipeline {
             }
         }
 
-stage('2. Spin Up Environment (Docker)') {
+        stage('2. Spin Up Environment (Docker)') {
             steps {
                 echo 'Starting Database, Backend, and Frontend containers...'
                 
@@ -24,7 +24,7 @@ stage('2. Spin Up Environment (Docker)') {
                     // 1. Generate the .env file on the fly for Docker
                     sh '''
                     cat <<EOT > ecommerce/server/.env
-GEMINI_API_KEY=AIzaSyAi-O9wppFZoZkpRagxxV0rs6eu7FfAhZY
+GEMINI_API_KEY=AIzaSyAQaYQFCAvVSXJChFm7M-GXi_oRkqbva4o
 DB_HOST=db
 DB_USER=postgres
 DB_PASSWORD=RFdn1234?!
@@ -44,11 +44,11 @@ EOT
 
         stage('3. Install Playwright Dependencies') {
             steps {
-                // Navigate into your frontend folder (where your tests live)
-                dir('ecommerce/frontend') {
+                // Notice we are targeting the specific frontend folder here
+                dir('p2m_ecommerce-main/ecommerce/frontend') {
                     echo 'Installing NPM packages and Playwright browsers...'
                     sh 'npm install'
-                    // Installs the invisible (headless) browsers Playwright needs
+                    // The --with-deps flag is crucial here; it installs the Linux browsers Playwright needs!
                     sh 'npx playwright install --with-deps chromium' 
                 }
             }
@@ -56,24 +56,25 @@ EOT
 
         stage('4. Run Playwright Tests') {
             steps {
-                dir('ecommerce/frontend') {
+                dir('p2m_ecommerce-main/ecommerce/frontend') {
                     echo 'Running E2E tests...'
-                    // Runs the tests headlessly (without the --ui flag)
                     sh 'npx playwright test'
                 }
             }
         }
     }
 
-    // The 'post' block runs AFTER the stages, no matter what happens
     post {
         always {
             echo 'Tearing down Docker containers to keep the server clean...'
-            // CRITICAL: Shut down the containers even if the test fails!
-            sh 'docker-compose down'
             
-            // Saves the Playwright HTML report so you can view it inside the Jenkins dashboard
-            dir('ecommerce/frontend') {
+            // We must step into the main folder to find docker-compose.yml for the teardown
+            dir('p2m_ecommerce-main') {
+                sh 'docker-compose down'
+            }
+            
+            // Step into the frontend folder to grab the test report
+            dir('p2m_ecommerce-main/ecommerce/frontend') {
                 archiveArtifacts artifacts: 'playwright-report/**/*', allowEmptyArchive: true
             }
         }
@@ -84,4 +85,3 @@ EOT
             echo '❌ Tests failed. Please check the Playwright report.'
         }
     }
-}
