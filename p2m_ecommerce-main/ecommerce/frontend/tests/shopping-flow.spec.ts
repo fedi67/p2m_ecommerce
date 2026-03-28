@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 // Replace this with your actual local React development URL
-const BASE_URL = 'http://localhost:5174'; 
+const BASE_URL = 'http://host.docker.internal:5174';
 
 test('Complete User Shopping Flow', async ({ page }) => {
 

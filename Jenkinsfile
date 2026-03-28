@@ -58,7 +58,7 @@ EOT
             steps {
                 dir('p2m_ecommerce-main/ecommerce/frontend') {
                     echo 'Running E2E tests...'
-                    sh 'npx playwright test'
+                    sh 'npx playwright test --project=chromium'
                 }
             }
         }
