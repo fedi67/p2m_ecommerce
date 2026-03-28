@@ -38,7 +38,7 @@ EOT
                 }
                 
                 // 3. Give the containers 10 seconds to fully boot up before moving on
-                sh 'sleep 10'
+                sh 'sleep 45'
             }
         }
 
