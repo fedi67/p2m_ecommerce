@@ -7,7 +7,7 @@ def random_string(length=8):
     return ''.join(random.choices(string.ascii_lowercase + string.digits, k=length))
 
 def test_auth():
-    base_url = "http://localhost:8000"
+    base_url = "http://host.docker.internal:8000"
     email = f"test_{random_string()}@example.com"
     password = "testpassword123"
     first_name = "TestUser"

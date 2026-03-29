@@ -3,7 +3,7 @@ import json
 
 try:
     response = requests.post(
-        "http://127.0.0.1:8000/api/chat",
+        "http://host.docker.internal:8000/api/chat",
         json={"message": "hello", "history": []}
     )
     print(f"Status Code: {response.status_code}")

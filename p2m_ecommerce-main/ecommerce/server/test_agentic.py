@@ -1,7 +1,7 @@
 import requests
 import json
 
-BASE_URL = "http://localhost:8000"
+BASE_URL = "http://host.docker.internal:8000"
 
 def test_agentic_chat():
     print("--- Test: Agentic Chat with Preference Update ---")

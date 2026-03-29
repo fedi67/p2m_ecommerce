@@ -1,7 +1,7 @@
 import requests
 import json
 
-url = "http://localhost:8000/api/chat"
+url = "http://host.docker.internal:8000/api/chat"
 headers = {"Content-Type": "application/json"}
 q = "Je cherche un gilet matelassé"
 

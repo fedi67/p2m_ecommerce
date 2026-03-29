@@ -1,7 +1,7 @@
 import requests
 import json
 
-BASE_URL = "http://localhost:8000"
+BASE_URL = "http://host.docker.internal:8000"
 
 # Note: This is a pseudo-test because we don't have a real valid JWT for a customer with preferences easily.
 # But we can test if the endpoint still works without token, and then try to mock the behavior if needed.

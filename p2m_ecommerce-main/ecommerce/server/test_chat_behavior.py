@@ -2,7 +2,7 @@ import requests
 import json
 
 def test_chat():
-    url = "http://localhost:8000/api/chat"
+    url = "http://host.docker.internal:8000/api/chat"
     payload = {
         "message": "Bonjour",
         "history": []
